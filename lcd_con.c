@@ -1,5 +1,5 @@
 //******************************************
-//**           æ¶²æ™¶è¡¨ç¤ºå™¨è¡¨ç¤ºåˆ¶å¾¡ ã€€ã€€ã€€  **
+//**           ‰t»•\¦Ší•\¦§Œä @@@  **
 //******************************************
 //**includes **
 //**
@@ -9,14 +9,26 @@
 //#include "common.h"
 //#include "config.h"
 //#include "system.h"
-//#include "sfr.h"
+#include "sfr.h"
 #include "lcd_con.h"
 
 /**********************************************************************
-*** defineã€€(æ–‡å­—å®šç¾©ï¼‰
+*** define@(•¶š’è‹`j
 **********************************************************************/
-extern unsigned char TITL0[16] = "DISPLAYtest 2021";
-extern unsigned char TITL1[16] = "    ï½¶ï½³ï¾ï¾€ï½° =     ";
+extern unsigned char TITL0[32] = "DISPLAYtest 2021";
+extern unsigned char TITL1[32] = "work hard   2053";
+
+extern unsigned char TITL2[32] = "save the nature ";
+extern unsigned char TITL3[32] = "save the life   ";
+
+extern unsigned char TITL10[32] = "'0804-0810:04*01";
+extern unsigned char TITL11[32] = "H =+0123            ";
+
+extern unsigned char TITL112[32] = "Ë¶¸ ¾¯Ã²     *02";
+extern unsigned char TITL113[32] = "+0000            ";
+
+extern unsigned char TITL14[32] = "´×- Áª¯¸     *03";
+extern unsigned char TITL15[32] = ">±Ø     Å¼       ";
 
 //*****************************************
 void dispset_titl(void)
@@ -24,49 +36,67 @@ void dispset_titl(void)
 	unsigned char n;
 	unsigned char dsp_buf;
 
-	lcd_l1(0);				//1è¡Œç›®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚»ãƒƒãƒˆ
+	lcd_l1(0);				//1s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	for (n=0 ;n<16 ;n++) {
+		dsp_buf = TITL2[n];		//line 1
+		lcd_dout(dsp_buf);		//1data write
+	}	
+	lcd_l2(0);				//2s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	for (n=0 ;n<16 ;n++) {
+		dsp_buf = TITL3[n];		//line 2
+		lcd_dout(dsp_buf);		//1data write
+	   }
+	
+	delay_msec(1000);
+	lcd_cout(0x01);	
+	
+	lcd_l1(0);				//1s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
 	for (n=0 ;n<16 ;n++) {
 		dsp_buf = TITL0[n];		//line 1
 		lcd_dout(dsp_buf);		//1data write
-	}
-	
-	lcd_l2(0);				//2è¡Œç›®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚»ãƒƒãƒˆ
+	}	
+	lcd_l2(0);				//2s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
 	for (n=0 ;n<16 ;n++) {
 		dsp_buf = TITL1[n];		//line 2
 		lcd_dout(dsp_buf);		//1data write
 	}
-}
-//****************************************
-//**
+	
+	delay_msec(1000);
+	lcd_cout(0x01);	
+	
+	lcd_l1(0);				//1s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	for (n=0 ;n<16 ;n++) {
+		dsp_buf = TITL10[n];		//line 1
+		lcd_dout(dsp_buf);		//1data write
+	}	
+	lcd_l2(0);				//2s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	for (n=0 ;n<16 ;n++) {
+		dsp_buf = TITL11[n];		//line 2
+		lcd_dout(dsp_buf);		//1data write
+	}
+	delay_msec(1000);
+	lcd_cout(0x01);	
+	
+	lcd_l1(0);				//1s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	for (n=0 ;n<16 ;n++) {
+		dsp_buf = TITL112[n];		//line 1
+		lcd_dout(dsp_buf);		//1data write
+	}	
+	lcd_l2(0);				//2s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	for (n=0 ;n<16 ;n++) {
+		dsp_buf = TITL113[n];		//line 2
+		lcd_dout(dsp_buf);		//1data write
+	}
+	
+	}
+
 void dispset_count(void)
 {
-	
-	delay_msec(100);
-	dpcnt[0]++;
-	if (dpcnt[0] > 9){
-		dpcnt[0] = 0;
-		dpcnt[1]++;
-	}
-	if (dpcnt[1] > 9){
-		dpcnt[1] = 0;
-		dpcnt[2]++;
-	}
-	if (dpcnt[2] > 9){
-		dpcnt[2] = 0;
-		dpcnt[3]++;
-	}
-	if (dpcnt[3] > 9){
-		dpcnt[3] = 0;
-	}
-	lcd_cout(0xCC);
-	lcd_dout(dpcnt[3] + 0x30);
-	lcd_dout(dpcnt[2] + 0x30);
-	lcd_dout(dpcnt[1] + 0x30);
-	lcd_dout(dpcnt[0] + 0x30);
+      delay_msec(100);	
 }
 
 //****************************************
-//**ã€€LCDåˆæœŸåŒ–
+//**@LCD‰Šú‰»
 //
 void lcd_init(void)
 {
@@ -88,52 +118,55 @@ void lcd_init(void)
 	P7 = 0x03;		//E=0,RS=0
 	delay_msec(5);
 //
-	P7 = 0x02;		//4bitï¾ƒï¾ï½°ï¾€é•·è¨­å®š
+	P7 = 0x02;		//4bitÃŞ°À’·İ’è
 	P7 = 0x22;		//E=1,RS=0
 	delay_micro(100);
 	P7 = 0x02;		//E=0,RS=0
 	delay_msec(5);
-//** ã“ã“ã‹ã‚‰4ï¾‹ï¾ï½¯ï¾„ï¾ƒï¾ï½°ï¾€é•·
-	lcd_cout(0x28);		//ï¾Œï½§ï¾ï½¸ï½¼ï½®ï¾ï½¾ï½¯ï¾„	
+//** ‚±‚±‚©‚ç4ËŞ¯ÄÃŞ°À’·
+	lcd_cout(0x02);		                          //for 4-bit lcd intialization
 	delay_msec(5);
-	lcd_cout(0x08);		//è¡¨ç¤ºï½µï¾Œ	
+	lcd_cout(0x28);		
 	delay_msec(5);
-	lcd_cout(0x01);		//è¡¨ç¤ºï½¸ï¾˜ï¾”ï½°	
-	delay_msec(5);
-	lcd_cout(0x06);		//ï½´ï¾ï¾„ï¾˜ï½°ï¾“ï½°ï¾„ï¾ï½¾ï½¯ï¾„	
-	delay_msec(5);
-	lcd_cout(0x0E);		//è¡¨ç¤ºonã€ï½¶ï½°ï½¿ï¾™on	
-	delay_msec(5);
+	lcd_cout(0x0C);
+	delay_msec(5);    
+	lcd_cout(0x06);
+	delay_msec(5); 
+	lcd_cout(0x01);
+	delay_msec(5);  
+	lcd_cout(0x80);
+	delay_msec(5);  
+			
 }
 
 //*****************************************
-//** 1è¡Œç›®ï½±ï¾„ï¾ï¾šï½½ï½¾ï½¯ï¾„
-//** col_1 = åˆ—
+//** 1s–Ú±ÄŞÚ½¾¯Ä
+//** col_1 = —ñ
 //**
 void lcd_l1(unsigned char col1)
 {
 	unsigned char posit1;
 //
-	posit1 = col1 & 0x0F;	//åˆ—ã®æœ€å¤§å€¤ï¼16
-	posit1 = posit1 + 0x80;	//1è¡Œç›®ï¾‹ï¾ï½¯ï¾„è¿½åŠ 
+	posit1 = col1 & 0x0F;	//—ñ‚ÌÅ‘å’l16
+	posit1 = posit1 + 0x80;	//1s–ÚËŞ¯Ä’Ç‰Á
 	lcd_cout(posit1);
 	delay_msec(5);
 }
 
 //*****************************************
-//** 2è¡Œç›®ï½±ï¾„ï¾ï¾šï½½ï½¾ï½¯ï¾„
+//** 2s–Ú±ÄŞÚ½¾¯Ä
 //**
 void lcd_l2(unsigned char col2)
 {
 	unsigned char posit2;
 
-	posit2 = col2 & 0x0F;	//åˆ—ã®æœ€å¤§å€¤ï¼16
-	posit2 = posit2 + 0xC0;	//2è¡Œç›®ï¾‹ï¾ï½¯ï¾„è¿½åŠ 
+	posit2 = col2 & 0x4F;	//—ñ‚ÌÅ‘å’l16
+	posit2 = posit2 + 0xC0;	//2s–ÚËŞ¯Ä’Ç‰Á
 	lcd_cout(posit2);
 	delay_msec(5);
 }
 //*****************************************
-//** ï½·ï½¬ï¾—ï½¸ï¾€LCDã€€ï½ºï¾ï¾„ï¾›ï½°ï¾™ï½ºï½°ï¾„ï¾å‡ºåŠ›
+//** ·¬×¸ÀLCD@ºİÄÛ°Ùº°ÄŞo—Í
 //
 void lcd_cout(unsigned char ccod)
 {
@@ -144,7 +177,7 @@ void lcd_cout(unsigned char ccod)
 	ccod_lsb = ccod & 0x0F;
 //
 	P7 = ccod_msb;		//E=0,RS=0 + MSB
-	delay_micro(2);
+	
 	P7 = ccod_msb | 0x20;	//E=1,RS=0
 	delay_micro(2);
 	P7 = ccod_msb;		//E=0,RS=0
@@ -152,14 +185,14 @@ void lcd_cout(unsigned char ccod)
 	delay_micro(2);
 //
 	P7 = ccod_lsb;		//E=0,RS=0 + LSB
-	delay_micro(2);
+	
 	P7 = ccod_lsb | 0x20;	//E=1,RS=0
 	delay_micro(2);
 	P7 = ccod_lsb;		//E=0,RS=0
 	delay_micro(50);
 }
 //****************************************
-//** ï½·ï½¬ï¾—ï½¸ï¾€LCDã€€ï¾ƒï¾ï½°ï¾€ï½ºï½°ï¾„ï¾å‡ºåŠ›
+//** ·¬×¸ÀLCD@ÃŞ°Àº°ÄŞo—Í
 //
 void lcd_dout(unsigned char dcod)
 {
@@ -170,7 +203,7 @@ void lcd_dout(unsigned char dcod)
 	dcod_lsb = dcod & 0x0F;
 //
 	P7 = dcod_msb | 0x10;	//E=0,RS=1 + MSB
-	delay_micro(2);
+	
 	P7 = dcod_msb | 0x30;	//E=1,RS=1
 	delay_micro(2);
 	P7 = dcod_msb | 0x10;	//E=0,RS=1
@@ -178,7 +211,7 @@ void lcd_dout(unsigned char dcod)
 	delay_micro(2);
 //
 	P7 = dcod_lsb | 0x10;	//E=0,RS=1 + LSB
-	delay_micro(2);
+	
 	P7 = dcod_lsb | 0x30;	//E=1,RS=1
 	delay_micro(2);
 	P7 = dcod_lsb | 0x10;	//E=0,RS=1
@@ -186,31 +219,31 @@ void lcd_dout(unsigned char dcod)
 //
 }
 //*****************************************
-//** ï¾ï½²ï½¸ï¾›ç§’é…å»¶
+//** Ï²¸Û•b’x‰„
 void delay_micro(unsigned int icnt)
 {
-	unsigned int del_cnt,cnt2;
+	unsigned int del_cnt;
 
 	for (del_cnt=0;del_cnt<icnt;del_cnt++){
-		for (cnt2=0; cnt2<11; cnt2++){
-			cnt2++;
-		}
-//			NOP();                      //to use NOP() funciton, it must be define in sfr.h header file
-//			NOP();
-//			NOP();
-//			NOP();
-//			NOP();
-	}
-}
+	
+		        NOP();
+ 			NOP();
+			NOP();
+			NOP();
+			NOP();					
+	              }
+                  }
 //******************************************
-//** ï¾ï¾˜ç§’é…å»¶
+//** ĞØ•b’x‰„
 void delay_msec(unsigned int icnt)
 {
 	unsigned int del_cnt;
 
 	for (del_cnt=0;del_cnt<icnt;del_cnt++){
-//		wdt_rst();
+//		wdt_rst();      
+               WDTE = 0xAC;
 		delay_micro(1000);
+		 
 	}
 }
-//******** END ********
+
