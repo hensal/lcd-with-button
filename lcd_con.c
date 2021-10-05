@@ -1,5 +1,5 @@
 //******************************************
-//**           ‰t»•\¦Ší•\¦§Œä @@@  **
+//**           æ¶²æ™¶è¡¨ç¤ºå™¨è¡¨ç¤ºåˆ¶å¾¡ ã€€ã€€ã€€  **
 //******************************************
 //**includes **
 //**
@@ -13,10 +13,10 @@
 #include "lcd_con.h"
 
 /**********************************************************************
-*** define@(•¶š’è‹`j
+*** defineã€€(æ–‡å­—å®šç¾©ï¼‰
 **********************************************************************/
 extern unsigned char TITL0[16] = "DISPLAYtest 2021";
-extern unsigned char TITL1[16] = "    ¶³İÀ° =     ";
+extern unsigned char TITL1[16] = "    ï½¶ï½³ï¾ï¾€ï½° =     ";
 
 //*****************************************
 void dispset_titl(void)
@@ -24,13 +24,13 @@ void dispset_titl(void)
 	unsigned char n;
 	unsigned char dsp_buf;
 
-	lcd_l1(0);				//1s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	lcd_l1(0);				//1è¡Œç›®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚»ãƒƒãƒˆ
 	for (n=0 ;n<16 ;n++) {
 		dsp_buf = TITL0[n];		//line 1
 		lcd_dout(dsp_buf);		//1data write
 	}
 	
-	lcd_l2(0);				//2s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	lcd_l2(0);				//2è¡Œç›®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚»ãƒƒãƒˆ
 	for (n=0 ;n<16 ;n++) {
 		dsp_buf = TITL1[n];		//line 2
 		lcd_dout(dsp_buf);		//1data write
@@ -66,7 +66,7 @@ void dispset_count(void)
 }
 
 //****************************************
-//**@LCD‰Šú‰»
+//**ã€€LCDåˆæœŸåŒ–
 //
 void lcd_init(void)
 {
@@ -88,52 +88,52 @@ void lcd_init(void)
 	P7 = 0x03;		//E=0,RS=0
 	delay_msec(5);
 //
-	P7 = 0x02;		//4bitÃŞ°À’·İ’è
+	P7 = 0x02;		//4bitï¾ƒï¾ï½°ï¾€é•·è¨­å®š
 	P7 = 0x22;		//E=1,RS=0
 	delay_micro(100);
 	P7 = 0x02;		//E=0,RS=0
 	delay_msec(5);
-//** ‚±‚±‚©‚ç4ËŞ¯ÄÃŞ°À’·
-	lcd_cout(0x28);		//Ì§İ¸¼®İ¾¯Ä	
+//** ã“ã“ã‹ã‚‰4ï¾‹ï¾ï½¯ï¾„ï¾ƒï¾ï½°ï¾€é•·
+	lcd_cout(0x28);		//ï¾Œï½§ï¾ï½¸ï½¼ï½®ï¾ï½¾ï½¯ï¾„	
 	delay_msec(5);
-	lcd_cout(0x08);		//•\¦µÌ	
+	lcd_cout(0x08);		//è¡¨ç¤ºï½µï¾Œ	
 	delay_msec(5);
-	lcd_cout(0x01);		//•\¦¸ØÔ°	
+	lcd_cout(0x01);		//è¡¨ç¤ºï½¸ï¾˜ï¾”ï½°	
 	delay_msec(5);
-	lcd_cout(0x06);		//´İÄØ°Ó°ÄŞ¾¯Ä	
+	lcd_cout(0x06);		//ï½´ï¾ï¾„ï¾˜ï½°ï¾“ï½°ï¾„ï¾ï½¾ï½¯ï¾„	
 	delay_msec(5);
-	lcd_cout(0x0E);		//•\¦onA¶°¿Ùon	
+	lcd_cout(0x0E);		//è¡¨ç¤ºonã€ï½¶ï½°ï½¿ï¾™on	
 	delay_msec(5);
 }
 
 //*****************************************
-//** 1s–Ú±ÄŞÚ½¾¯Ä
-//** col_1 = —ñ
+//** 1è¡Œç›®ï½±ï¾„ï¾ï¾šï½½ï½¾ï½¯ï¾„
+//** col_1 = åˆ—
 //**
 void lcd_l1(unsigned char col1)
 {
 	unsigned char posit1;
 //
-	posit1 = col1 & 0x0F;	//—ñ‚ÌÅ‘å’l16
-	posit1 = posit1 + 0x80;	//1s–ÚËŞ¯Ä’Ç‰Á
+	posit1 = col1 & 0x0F;	//åˆ—ã®æœ€å¤§å€¤ï¼16
+	posit1 = posit1 + 0x80;	//1è¡Œç›®ï¾‹ï¾ï½¯ï¾„è¿½åŠ 
 	lcd_cout(posit1);
 	delay_msec(5);
 }
 
 //*****************************************
-//** 2s–Ú±ÄŞÚ½¾¯Ä
+//** 2è¡Œç›®ï½±ï¾„ï¾ï¾šï½½ï½¾ï½¯ï¾„
 //**
 void lcd_l2(unsigned char col2)
 {
 	unsigned char posit2;
 
-	posit2 = col2 & 0x0F;	//—ñ‚ÌÅ‘å’l16
-	posit2 = posit2 + 0xC0;	//2s–ÚËŞ¯Ä’Ç‰Á
+	posit2 = col2 & 0x0F;	//åˆ—ã®æœ€å¤§å€¤ï¼16
+	posit2 = posit2 + 0xC0;	//2è¡Œç›®ï¾‹ï¾ï½¯ï¾„è¿½åŠ 
 	lcd_cout(posit2);
 	delay_msec(5);
 }
 //*****************************************
-//** ·¬×¸ÀLCD@ºİÄÛ°Ùº°ÄŞo—Í
+//** ï½·ï½¬ï¾—ï½¸ï¾€LCDã€€ï½ºï¾ï¾„ï¾›ï½°ï¾™ï½ºï½°ï¾„ï¾å‡ºåŠ›
 //
 void lcd_cout(unsigned char ccod)
 {
@@ -159,7 +159,7 @@ void lcd_cout(unsigned char ccod)
 	delay_micro(50);
 }
 //****************************************
-//** ·¬×¸ÀLCD@ÃŞ°Àº°ÄŞo—Í
+//** ï½·ï½¬ï¾—ï½¸ï¾€LCDã€€ï¾ƒï¾ï½°ï¾€ï½ºï½°ï¾„ï¾å‡ºåŠ›
 //
 void lcd_dout(unsigned char dcod)
 {
@@ -186,7 +186,7 @@ void lcd_dout(unsigned char dcod)
 //
 }
 //*****************************************
-//** Ï²¸Û•b’x‰„
+//** ï¾ï½²ï½¸ï¾›ç§’é…å»¶
 void delay_micro(unsigned int icnt)
 {
 	unsigned int del_cnt,cnt2;
@@ -195,7 +195,7 @@ void delay_micro(unsigned int icnt)
 		for (cnt2=0; cnt2<11; cnt2++){
 			cnt2++;
 		}
-//			NOP();
+//			NOP();                      //to use NOP() funciton, it must be define in sfr.h header file
 //			NOP();
 //			NOP();
 //			NOP();
@@ -203,7 +203,7 @@ void delay_micro(unsigned int icnt)
 	}
 }
 //******************************************
-//** ĞØ•b’x‰„
+//** ï¾ï¾˜ç§’é…å»¶
 void delay_msec(unsigned int icnt)
 {
 	unsigned int del_cnt;
