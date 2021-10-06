@@ -17,10 +17,9 @@
 #include "panel.h"
 #include "lcd_con.h"
 
-void 	main(void);
-void IO_Init(void);		//IOﾎﾟｰﾄ　初期化
-//*  設定ｽｲｯﾁ
-unsigned char 	modef 	= 0;		//操作スイッチ　フラグ（ON＝１）
+void IO_Init(void);		
+
+unsigned char 	modef 	= 0;		
 unsigned char 	upf 	= 0;
 unsigned char 	downf 	= 0;
 unsigned char 	leftf 	= 0;
@@ -48,7 +47,7 @@ void main(void) {
 	lcd_init();
 	
 	/*LCD TITLE set */
-	dispset_titl();		
+	dispset_titl();	
 	
 	/* Main Loop */
 	main_loop();	
@@ -69,6 +68,10 @@ void main_loop(void)
 		
 		//**** count ****
 		dispset_count();
+		
+		op_switich_in();
+	       op_switich_mdoef();
+	
 
 #if !defined PWM_USED
 		/* Processing at 10ms cycle */
