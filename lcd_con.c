@@ -1,11 +1,7 @@
-//******************************************
-//**           液晶表示器表示制御 　　　  **
-//******************************************
-//**includes **
-//**
 #include <stdio.h>
 #include <string.h>
 #include "iodefine.h"
+#include <stdint.h>
 //#include "common.h"
 //#include "config.h"
 //#include "system.h"
@@ -15,80 +11,20 @@
 /**********************************************************************
 *** define　(文字定義）
 **********************************************************************/
-extern unsigned char TITL0[32] = "DISPLAYtest 2021";
+extern unsigned char TITL0[32] = "Try your best 2021";
 extern unsigned char TITL1[32] = "work hard   2053";
 
-extern unsigned char TITL2[32] = "save the nature ";
-extern unsigned char TITL3[32] = "save the life   ";
+extern unsigned char TITL72[32] = "save the nature ";
+extern unsigned char TITL73[32] = "save the life   ";
+
+extern unsigned char Line11[32] = "Hello  ";
+extern unsigned char Line122[32] = "16563     ";
 
 extern unsigned char TITL10[32] = "'0804-0810:04*01";
-extern unsigned char TITL11[32] = "H =+0123            ";
-
-extern unsigned char TITL112[32] = "ﾋｶｸ ｾｯﾃｲ     *02";
-extern unsigned char TITL113[32] = "+0000            ";
-
-extern unsigned char TITL14[32] = "ｴﾗ- ﾁｪｯｸ     *03";
-extern unsigned char TITL15[32] = ">ｱﾘ     ﾅｼ       ";
-
-//*****************************************
-void dispset_titl(void)
-{
-	unsigned char n;
-	unsigned char dsp_buf;
-
-	lcd_l1(0);				//1行目先頭アドレスセット
-	for (n=0 ;n<16 ;n++) {
-		dsp_buf = TITL2[n];		//line 1
-		lcd_dout(dsp_buf);		//1data write
-	}	
-	lcd_l2(0);				//2行目先頭アドレスセット
-	for (n=0 ;n<16 ;n++) {
-		dsp_buf = TITL3[n];		//line 2
-		lcd_dout(dsp_buf);		//1data write
-	   }
-	
-	delay_msec(1000);
-	lcd_cout(0x01);	
-	
-	lcd_l1(0);				//1行目先頭アドレスセット
-	for (n=0 ;n<16 ;n++) {
-		dsp_buf = TITL0[n];		//line 1
-		lcd_dout(dsp_buf);		//1data write
-	}	
-	lcd_l2(0);				//2行目先頭アドレスセット
-	for (n=0 ;n<16 ;n++) {
-		dsp_buf = TITL1[n];		//line 2
-		lcd_dout(dsp_buf);		//1data write
-	}
-	
-	delay_msec(1000);
-	lcd_cout(0x01);	
-	
-	lcd_l1(0);				//1行目先頭アドレスセット
-	for (n=0 ;n<16 ;n++) {
-		dsp_buf = TITL10[n];		//line 1
-		lcd_dout(dsp_buf);		//1data write
-	}	
-	lcd_l2(0);				//2行目先頭アドレスセット
-	for (n=0 ;n<16 ;n++) {
-		dsp_buf = TITL11[n];		//line 2
-		lcd_dout(dsp_buf);		//1data write
-	}
-	delay_msec(1000);
-	lcd_cout(0x01);	
-	
-	lcd_l1(0);				//1行目先頭アドレスセット
-	for (n=0 ;n<16 ;n++) {
-		dsp_buf = TITL112[n];		//line 1
-		lcd_dout(dsp_buf);		//1data write
-	}	
-	lcd_l2(0);				//2行目先頭アドレスセット
-	for (n=0 ;n<16 ;n++) {
-		dsp_buf = TITL113[n];		//line 2
-		lcd_dout(dsp_buf);		//1data write
-	}
-	
-	}
+extern unsigned char TITL11[32] = " 9                           ";
+extern unsigned char TITL11A[32] = "    0123  ";
+extern unsigned char TITL11B[32] = "         R=";
+extern unsigned char TITL11C[32] = "           001.5";
 
 void dispset_count(void)
 {
@@ -135,8 +71,7 @@ void lcd_init(void)
 	lcd_cout(0x01);
 	delay_msec(5);  
 	lcd_cout(0x80);
-	delay_msec(5);  
-			
+	delay_msec(5);  			
 }
 
 //*****************************************
@@ -168,7 +103,7 @@ void lcd_l2(unsigned char col2)
 //*****************************************
 //** ｷｬﾗｸﾀLCD　ｺﾝﾄﾛｰﾙｺｰﾄﾞ出力
 //
-void lcd_cout(unsigned char ccod)
+int lcd_cout(unsigned char ccod)
 {
 	unsigned char ccod_msb;
 	unsigned char ccod_lsb;
@@ -190,11 +125,12 @@ void lcd_cout(unsigned char ccod)
 	delay_micro(2);
 	P7 = ccod_lsb;		//E=0,RS=0
 	delay_micro(50);
+	return 0;
 }
 //****************************************
 //** ｷｬﾗｸﾀLCD　ﾃﾞｰﾀｺｰﾄﾞ出力
 //
-void lcd_dout(unsigned char dcod)
+int lcd_dout(unsigned char dcod)
 {
 	unsigned char dcod_msb;
 	unsigned char dcod_lsb;
@@ -215,8 +151,8 @@ void lcd_dout(unsigned char dcod)
 	P7 = dcod_lsb | 0x30;	//E=1,RS=1
 	delay_micro(2);
 	P7 = dcod_lsb | 0x10;	//E=0,RS=1
-	delay_micro(50);
-//
+	delay_micro(50);     
+//	return 0;
 }
 //*****************************************
 //** ﾏｲｸﾛ秒遅延
@@ -224,8 +160,7 @@ void delay_micro(unsigned int icnt)
 {
 	unsigned int del_cnt;
 
-	for (del_cnt=0;del_cnt<icnt;del_cnt++){
-	
+	for (del_cnt=0;del_cnt<icnt;del_cnt++){	
 		        NOP();
  			NOP();
 			NOP();
@@ -239,11 +174,10 @@ void delay_msec(unsigned int icnt)
 {
 	unsigned int del_cnt;
 
-	for (del_cnt=0;del_cnt<icnt;del_cnt++){
+	for (del_cnt=0;del_cnt<icnt;del_cnt++) {
 //		wdt_rst();      
                WDTE = 0xAC;
-		delay_micro(1000);
-		 
+		delay_micro(1000);		 
 	}
 }
 
