@@ -6,28 +6,47 @@
 #include "sfr.h"
 #include "button.h"
 
-unsigned char		before_opsw_id;
+unsigned char before_opsw_id;
 int count = 0;
+int row = 1;
+int col = 0;
 int first = 1;
 int second = 0;
+int num = 0;
+int counter= 0x30;
+
+int temp = 0;
+//counterset = 100;
+int dsp_buf;
 
 extern unsigned char TITL12[32] = "Ë¶¸ ¾¯Ã²     *02";
-extern unsigned char TITL13[32] = "+0000            ";
+extern unsigned char TITL13[32] = "1               ";
+
+extern unsigned char Line111[32] = "Hello,ggggg ";
+extern unsigned char Line112[32] = "9   ";
 
 extern unsigned char TITL99[32] = "Try your best 2021";
 extern unsigned char TITL98[32] = "work hard   2053";
 
+extern unsigned char Line1991[32] = "Hello  ";
+extern unsigned char Line12[32] = "16563     ";
 
-void set_cursor_position (uint_fast8_t row, uint_fast8_t col)                                                 
+int set_cursor_position (uint_fast8_t row, uint_fast8_t col)                                                 
 	       {		 	 
 		  if (row)
 		                {
 			            col |= 0x40;				    
 				    } 
 				    col |= 0x80;
-				    lcd_cout (col); 				     	 
+				    lcd_cout (col); 	
+				    return 0;
 	       }		       
 
+void increment(void) {
+     	   temp = temp+1;
+	   lcd_dout(temp);	  
+}
+	       
 void IO_Init(void)
 {
  //
@@ -41,7 +60,7 @@ void op_switich_in(void)
 
 	if (opsw_id == before_opsw_id){
 		if ((opsw_id & 0x01) == 0) modef = 1;
-			if ((opsw_id & 0x02) == 0) upf = 1;
+		if ((opsw_id & 0x02) == 0) upf = 1;
 		if ((opsw_id & 0x04) == 0) downf = 1;
 		if ((opsw_id & 0x08) == 0) leftf = 1;
 		if ((opsw_id & 0x10) == 0) rightf = 1;
@@ -49,7 +68,6 @@ void op_switich_in(void)
 	}	
 	before_opsw_id = opsw_id;		
 }	
-
 
 unsigned char op_swin_1d(void)
 {
@@ -97,10 +115,9 @@ void dispset_titl2(void)
 	   }
 }
 
-
 void op_switich_mdoef(void)
 {	
-	if (modef == 1){		                          // when button is pressed       
+	if (modef == 1) {		                          // when button is pressed       
               if (count == 0) {                                                      //   increment count and
 	            count++;
 		     delay_msec(100);
@@ -116,31 +133,38 @@ void op_switich_mdoef(void)
         } 
     } 
 }
-void op_switich_upf(void)
-{	
-	 
-      if (upf == 1) {
-          
-	    }	
+
+
+void op_switich_upf(void){	
+            if (upf == 1) { 		  
+	     increment();
+	      set_cursor_position (1, 0);
+	      upf = 0;
+	      }      
 }
 
 void op_switich_downf(void)
-{			
-
+{		
 	if (downf == 1){
-		lcd_cout(0x01);
+		temp = temp -1;
+		lcd_dout(temp);
+		set_cursor_position (1, 0);
+		downf = 0;
 	    }	
 }
 
+
 void op_switich_leftf(void)
 {	
-	if (leftf == 1){
+	if (leftf == 1) {		
+		if( first>0) {
 		set_cursor_position (first, second);	
 		lcd_cout(0x0f);
 		first = 1;
 		second = second+1;
-		leftf = 0;
+		leftf = 0;		
 	    }	
+	  } 
 }
 
 void op_switich_rightf(void)
@@ -151,7 +175,7 @@ void op_switich_rightf(void)
 		set_cursor_position (first, second);	
 		lcd_cout(0x0f);
 		rightf =0;
-	    }	
+	    }
 }
 
 void op_switich_setf(void)
@@ -161,4 +185,19 @@ void op_switich_setf(void)
           lcd_cout(0x0f);
 	    }	
 }
+
+
+void op_switich_setff(void)
+{	
+	if ((modef == 1)&&(rightf == 1)) {         
+        set_cursor_position (1, 0);	
+		lcd_cout(0x0f);
+	    }	
+	if ((modef == 1)&&(leftf == 1)) {      
+	   set_cursor_position (1, 0);	
+		lcd_cout(0x0f);
+		//dispset_titl12345();
+	}
+}
+
 
