@@ -17,7 +17,6 @@
 #include "panel.h"
 #include "lcd_con.h"
 #include "button.h"
-#include "display.h"
 #include <stdint.h>
 
 void IO_Init(void);	
@@ -31,8 +30,6 @@ void op_switich_rightf(void);
 void op_switich_setf(void);
 void IntToStr(unsigned int intval);
 void op_switich_setff(void);
-
-int write_string(uint_fast8_t, uint_fast8_t,unsigned const char  *str);
 
 unsigned char 	modef 	= 0;		
 unsigned char 	upf 	= 0;
@@ -103,13 +100,8 @@ void main_loop(void)
 		
 		op_switich_rightf();
 		
-		op_switich_setf();	
-		
-		
-		
-		//IntToStr(counterr);
-		
-		//op_switich_setff();	
+		op_switich_setf();			
+			
 
 #if !defined PWM_USED
 		/* Processing at 10ms cycle */
