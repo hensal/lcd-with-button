@@ -12,12 +12,7 @@ int row = 1;
 int col = 0;
 int first = 1;
 int second = 0;
-int num = 0;
-int counter= 0x30;
-
 int temp = 0;
-//counterset = 100;
-int dsp_buf;
 
 extern unsigned char TITL12[32] = "Ë¶¸ ¾¯Ã²     *02";
 extern unsigned char TITL13[32] = "1               ";
@@ -29,7 +24,28 @@ extern unsigned char TITL99[32] = "Try your best 2021";
 extern unsigned char TITL98[32] = "work hard   2053";
 
 extern unsigned char Line1991[32] = "Hello  ";
-extern unsigned char Line12[32] = "16563     ";
+extern unsigned char Line1112[32] = "16563     ";
+
+extern unsigned char Data0[32] = "'0804-0810:04*01";
+extern unsigned char Data1[32] = "Hello  ";
+extern unsigned char Data2[32] = "3     ";
+
+void display1(void)
+{
+	unsigned char n;
+	unsigned char dsp_buf;
+	
+	lcd_l1(0);				
+	        for (n=0 ;n<16 ;n++) {
+		         dsp_buf = Data0[n];		
+		         lcd_dout(dsp_buf);		
+	}			   				
+
+	    write_string(1, 0, Data2); 
+	    delay_msec(100);   
+	   //  write_string(1, 1, D2c);  	    
+}
+
 
 int set_cursor_position (uint_fast8_t row, uint_fast8_t col)                                                 
 	       {		 	 
@@ -42,11 +58,9 @@ int set_cursor_position (uint_fast8_t row, uint_fast8_t col)
 				    return 0;
 	       }		       
 
-void increment(void) {
-     	   temp = temp+1;
-	   lcd_dout(temp);	  
-}
-	       
+
+
+
 void IO_Init(void)
 {
  //
@@ -135,24 +149,6 @@ void op_switich_mdoef(void)
 }
 
 
-void op_switich_upf(void){	
-            if (upf == 1) { 		  
-	     increment();
-	      set_cursor_position (1, 0);
-	      upf = 0;
-	      }      
-}
-
-void op_switich_downf(void)
-{		
-	if (downf == 1){
-		temp = temp -1;
-		lcd_dout(temp);
-		set_cursor_position (1, 0);
-		downf = 0;
-	    }	
-}
-
 
 void op_switich_leftf(void)
 {	
@@ -165,6 +161,25 @@ void op_switich_leftf(void)
 		leftf = 0;		
 	    }	
 	  } 
+}
+
+void op_switich_upf(void){	
+      if (upf == 1) {   	 
+	      temp = temp+1;	    
+	      lcd_dout(temp);
+	      set_cursor_position (1, 0);	
+	      upf = 0;
+	      }      
+}
+
+void op_switich_downf(void)
+{		
+	if (downf == 1){
+		temp = temp -1;
+		lcd_dout(temp);
+		set_cursor_position (1, 0);
+		downf = 0;
+	    }	
 }
 
 void op_switich_rightf(void)
@@ -199,5 +214,21 @@ void op_switich_setff(void)
 		//dispset_titl12345();
 	}
 }
+
+
+int write_string(uint_fast8_t row, uint_fast8_t col, unsigned const char  *str) {
+    int x,y;                                          	 
+		  if (row)
+		                {
+			            col |= 0x40;				    
+				    } 
+				    col |= 0x80;
+				    lcd_cout (col); 
+	        for(y=0;Data2[y]!=0;y++) {
+		temp= lcd_dout(Data2[y]);
+		}                       
+                      
+		return 0;
+       }
 
 
