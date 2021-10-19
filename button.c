@@ -7,14 +7,8 @@
 #include "button.h"
 
 unsigned char before_opsw_id;
-int count = 0;
-int row = 1;
-int col = 0;
-int first = 1;
-int second = 0;
-int temp = 0;
 
-extern unsigned char TITL12[32] = "Ë¶¸ ¾¯Ã²     *02";
+extern unsigned char TITL12[32] = "ï¾‹ï½¶ï½¸ ï½¾ï½¯ï¾ƒï½²     *02";
 extern unsigned char TITL13[32] = "1               ";
 
 extern unsigned char Line111[32] = "Hello,ggggg ";
@@ -30,22 +24,10 @@ extern unsigned char Data0[32] = "'0804-0810:04*01";
 extern unsigned char Data1[32] = "Hello  ";
 extern unsigned char Data2[32] = "3     ";
 
-void display1(void)
-{
-	unsigned char n;
-	unsigned char dsp_buf;
-	
-	lcd_l1(0);				
-	        for (n=0 ;n<16 ;n++) {
-		         dsp_buf = Data0[n];		
-		         lcd_dout(dsp_buf);		
-	}			   				
-
-	    write_string(1, 0, Data2); 
-	    delay_msec(100);   
-	   //  write_string(1, 1, D2c);  	    
-}
-
+int count = 0;
+int first = 1;
+int second = 0;
+int temp = 0;
 
 int set_cursor_position (uint_fast8_t row, uint_fast8_t col)                                                 
 	       {		 	 
@@ -56,9 +38,55 @@ int set_cursor_position (uint_fast8_t row, uint_fast8_t col)
 				    col |= 0x80;
 				    lcd_cout (col); 	
 				    return 0;
-	       }		       
+	       }
+	       
+void display1(void)
+{
+	unsigned char n;
+	unsigned char dsp_buf;
+	
+	lcd_l1(0);				
+	        for (n=0 ;n<16 ;n++) {
+		         dsp_buf = Data0[n];		
+		         lcd_dout(dsp_buf);		
+	}  				
+	    write_string(1, 0, Data2); 
+	    delay_msec(100);   
+	   //  write_string(1, 1, D2c);  	    
+}
+	       
+void write_string(uint_fast8_t row, uint_fast8_t col, unsigned const char  *str) {
+    int y;                                          	 
+		  if (row)
+		                {
+			            col |= 0x40;				    
+				    } 
+				    col |= 0x80;
+				    lcd_cout (col); 
+				    
+	        for(y=0;Data2[y]!=0;y++) {
+		temp = lcd_dout(Data2[y]);
+		}                         		
+       }
 
+void op_switich_upf(void){	
+      if (upf == 1) {   	 
+	      temp = temp+1;	    
+	      lcd_dout(temp);
+	      set_cursor_position (1, 0);	
+	      upf = 0;
+	      }      
+}
 
+void op_switich_downf(void)
+{		
+	if (downf == 1){
+		temp = temp -1;
+		lcd_dout(temp);
+		set_cursor_position (1, 0);
+		downf = 0;
+	    }	
+}
 
 
 void IO_Init(void)
@@ -70,7 +98,7 @@ void op_switich_in(void)
 {
 	unsigned char	opsw_id;
 	
-	opsw_id = op_swin_1d();		//ƒXƒCƒbƒ`ƒf[ƒ^“Çž‚Ý
+	opsw_id = op_swin_1d();		//ã‚¹ã‚¤ãƒƒãƒãƒ‡ãƒ¼ã‚¿èª­è¾¼ã¿
 
 	if (opsw_id == before_opsw_id){
 		if ((opsw_id & 0x01) == 0) modef = 1;
@@ -100,12 +128,12 @@ void dispset_titl1(void)
 	unsigned char n;
 	unsigned char dsp_buf;
 
-	lcd_l1(0);				//1s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	lcd_l1(0);				//1è¡Œç›®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚»ãƒƒãƒˆ
 	for (n=0 ;n<16 ;n++) {
 		dsp_buf = TITL12[n];		//line 1
 		lcd_dout(dsp_buf);		//1data write
 	}	
-	lcd_l2(0);				//2s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	lcd_l2(0);				//2è¡Œç›®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚»ãƒƒãƒˆ
 	for (n=0 ;n<16 ;n++) {
 		dsp_buf = TITL13[n];		//line 2
 		lcd_dout(dsp_buf);		//1data write
@@ -117,12 +145,12 @@ void dispset_titl2(void)
 	unsigned char n;
 	unsigned char dsp_buf;
 
-	lcd_l1(0);				//1s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	lcd_l1(0);				//1è¡Œç›®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚»ãƒƒãƒˆ
 	for (n=0 ;n<16 ;n++) {
 		dsp_buf = TITL99[n];		//line 1
 		lcd_dout(dsp_buf);		//1data write
 	}	
-	lcd_l2(0);				//2s–Úæ“ªƒAƒhƒŒƒXƒZƒbƒg
+	lcd_l2(0);				//2è¡Œç›®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚»ãƒƒãƒˆ
 	for (n=0 ;n<16 ;n++) {
 		dsp_buf = TITL98[n];		//line 2
 		lcd_dout(dsp_buf);		//1data write
@@ -148,8 +176,6 @@ void op_switich_mdoef(void)
     } 
 }
 
-
-
 void op_switich_leftf(void)
 {	
 	if (leftf == 1) {		
@@ -163,24 +189,6 @@ void op_switich_leftf(void)
 	  } 
 }
 
-void op_switich_upf(void){	
-      if (upf == 1) {   	 
-	      temp = temp+1;	    
-	      lcd_dout(temp);
-	      set_cursor_position (1, 0);	
-	      upf = 0;
-	      }      
-}
-
-void op_switich_downf(void)
-{		
-	if (downf == 1){
-		temp = temp -1;
-		lcd_dout(temp);
-		set_cursor_position (1, 0);
-		downf = 0;
-	    }	
-}
 
 void op_switich_rightf(void)
 {	
@@ -214,21 +222,4 @@ void op_switich_setff(void)
 		//dispset_titl12345();
 	}
 }
-
-
-int write_string(uint_fast8_t row, uint_fast8_t col, unsigned const char  *str) {
-    int x,y;                                          	 
-		  if (row)
-		                {
-			            col |= 0x40;				    
-				    } 
-				    col |= 0x80;
-				    lcd_cout (col); 
-	        for(y=0;Data2[y]!=0;y++) {
-		temp= lcd_dout(Data2[y]);
-		}                       
-                      
-		return 0;
-       }
-
 
